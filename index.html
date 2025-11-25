@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Elegant Neon</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind config (colors) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: '#3ef08f',
+            blue: '#1fe0ff',
+            'neon-2': '#2cd876',
+            'bg-dark': '#0f1216',
+            'card-dark': '#15171b'
+          },
+          keyframes: {
+            floaty: {
+              '0%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+              '100%': { transform: 'translateY(0px)' }
+            },
+            slideUp: {
+              '0%': { opacity: 0, transform: 'translateY(18px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            'slide-up': 'slideUp 0.6s ease-out forwards'
+          }
+          
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom styles for blobs & shapes  -->
+  <style>
+    :root { --neon: #3ef08f; --bg: #0f1216; }
+
+    /* full-screen hero blob (blurred gradient circles) */
+    .blob {
+      position: absolute;
+      filter: blur(60px) saturate(120%);
+      opacity: 0.35;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* floating small shapes */
+    .float-shape {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      opacity: 0.08;
+      background: linear-gradient(135deg, rgba(62,240,143,0.25), rgba(44,216,118,0.15));
+      z-index: 0;
+      animation: floaty 7s ease-in-out infinite;
+    }
+
+    /* Make images have smooth transform */
+    .img-smooth { transition: transform .35s ease, box-shadow .35s ease; }
+
+    /* subtle glass card */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+    }
+
+    /* fade-in placeholder until animation triggered */
+    .will-fade { opacity: 0; transform: translateY(18px); }
+
+  </style>
+</head>
+<body class="bg-[color:var(--bg)] text-white antialiased">
+
+  <!-- BLOBS & FLOATING SHAPES -->
+  <div aria-hidden="true">
+    <div class="blob" style="width:520px;height:520px;left:-120px;top:40px;background:radial-gradient(circle at 30% 30%, rgba(62,240,143,0.9), rgba(62,240,143,0.5) 25%, rgba(0,0,0,0) 60%);"></div>
+    <div class="blob" style="width:420px;height:420px;right:-80px;top:120px;background:radial-gradient(circle at 70% 30%, rgba(44,216,118,0.9), rgba(44,216,118,0.35) 25%, rgba(0,0,0,0) 55%);"></div>
+
+    <div class="float-shape hidden md:block" style="right:8%;top:18%; animation-delay:0s;"></div>
+    <div class="float-shape hidden md:block" style="left:6%;top:55%; width:90px;height:90px;border-radius:28px; animation-duration:9s; animation-delay:1.2s;"></div>
+    <div class="float-shape hidden md:block" style="right:20%;bottom:14%; width:70px;height:70px;border-radius:12px; animation-duration:8s; animation-delay:2s;"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="relative z-20">
+    <nav class="max-w-6xl mx-auto px-6 md:px-8 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-md bg-neon flex items-center justify-center text-lg text-black font-bold">Ms.</div>
+        <span class="ml-2 text-base md:text-lg font-semibold">Nhi</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#home" class="text-white/80 text-lg hover:text-neon transition">Home</a>
+        <a href="#about" class="text-white/80 text-lg hover:text-neon transition">About</a>
+        <a href="#project" class="text-white/80 text-lg hover:text-neon transition">Projects</a>
+        <a href="#skill" class="text-white/80 text-lg hover:text-neon transition">Skills</a>
+        <a href="#contact" class="text-white/80 text-lg hover:text-neon transition">Contact</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden md:inline-block px-4 py-2 rounded-md bg-neon text-lg text-black font-medium hover:bg-neon-2 transition">Let's connect</a>
+
+        <!-- mobile menu button -->
+        <button id="menuBtn" class="md:hidden px-3 py-2 inline-flex items-center justify-center rounded-md border border-white/6">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- mobile menu id để java nhận biết click vao-->
+    <div id="mobileMenu" class="md:hidden bg-[color:var(--bg)] border-t border-white/6 hidden">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="#home" class="text-white/80 text-lg">Home</a>
+        <a href="#about" class="text-white/80 text-lg">About</a>
+        <a href="#project" class="text-white/80 text-lg">Projects</a>
+        <a href="#skill" class="text-white/80 text-lg">Skills</a>
+        <a href="#contact" class="text-white/80 text-lg">Contact</a>
+        <a href="#contact" class="mt-2 inline-block px-4 py-2 rounded-md bg-neon text-black text-center">Let's connect</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="home" class="relative z-10">
+    <section class="max-w-6xl mx-auto px-6 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-20 flex flex-col-reverse md:flex-row items-center gap-10">
+      <!-- text -->
+      <div class="w-full md:w-2/3 will-fade" data-animate>
+        <p class="text-base text-white/70 mb-3">Hello, I'm a</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+          Business <span class="text-neon">Analyst</span>.
+        </h1>
+        <p class="text-white/80 mt-6 max-w-lg text-lg">
+          I bridge business goals and technical execution - transforming complex needs into actionable solutions that deliver real impact.
+        </p>
+
+        <div class="mt-8 flex gap-4 items-center">
+          <a href="#portfolio" class="px-5 py-3 bg-neon rounded-md text-lg text-black font-semibold shadow">View Portfolio</a>
+          <a href="#contact" class="px-4 py-2 border border-white/6 rounded-md text-lg text-white/90">Let's work together</a>
+        </div>
+      </div>
+
+      <!-- image card -->
+      
+      <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+        <div class="flex justify-center relative">
+         
+          <div class="absolute -inset-6 rounded-1 bg-[#3ef08f]/20 blur-3xl"></div>
+            
+          <div class="relative p-[3px] rounded-3xl bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] shadow-[0_0_30px_rgba(62,240,143,0.5)]">
+            <div class="rounded-3xl overflow-hidden bg-black/20 backdrop-blur-xl">
+              <img src="src/xp1.png" class="w-[360px] h-auto mx-auto object-contain drop-shadow-[0_0_30px_rgba(62,240,143,0.6)] scale-[1.2] origin-bottom">
+          
+              <div class="absolute top-4 left-6 z-20 bg-black/60 text-white px-3 py-1 rounded-xl text-sm">1+ Year of Experience</div>
+              <div class="absolute right-2 top-1/2 bg-black/60 text-white px-3 py-1 rounded-lg text-sm">3+ Projects</div>
+              <div class="absolute bottom-12 left-4 z-20 bg-black/60 text-white px-4 py-2 rounded-xl text-lg font-semibold"> 2+ Clients</div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      
+      
+    </section>
+  </main>
+<div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
+  <!-- ABOUT -->
+  <style>
+    .career-goal {
+      background-color: #3ef08e36;
+      border-radius: 0%;
+      border-left: 4px solid #3ef08f;
+      padding: 20px;
+    }
+    .skill-card {
+      flex: 1 1 calc(50% - 12px);
+      min-width: 280px;
+      background-color: var(--bg);
+      border-left: 4px solid var(--neon);
+      border-radius: 0;
+      padding: 32px;
+      box-shadow: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+  </style>
+  
+  <section id="about" class="max-w-6xl mx-auto px-6 md:px-8 py-12 will-fade" data-animate>
+    <div class="space-y-2">
+      <div class="order-2 md:order-1">
+        <h2 class="text-3xl text-center md:text-3xl font-bold">About me & My Expertise</h2>
+        <p class="max-w-4xl mx-auto mt-12 text-center text-white/90 text-lg ">
+          With over a year of experience turning complex business requirements into user-friendly fintech products, I bridge the gap between stakeholders and development teams to deliver exceptional digital banking experiences by transforming business challenges into streamlined, effective solutions.
+        </p>
+        <div class="flex justify-center gap-[2px] text-center mt-6 italic text-white/60">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+          </svg>
+          <div class="flex flex-row flex-wrap gap-6 mt-12">
+
+          </div>
+          <p class="text-lg max-w-3xl">
+          <strong>Education:</strong> Ho Chi Minh University of Banking - Enterprise Information Systems (2019-2024)
+          </p>
+        </div>
+        <div class="career-goal mt-10 py-6 text-lg text-center max-w-4xl mx-auto">
+          <strong>Career Goals:</strong> Aspiring to grow into a Senior BA/Product Manager role, focused on optimizing user experience and operational efficiency.
+
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div class="mt-6 flex flex-col items-center justify-center w-80 h-58 rounded-3xl glass overflow-hidden shadow-lg border border-neon p-6">
+          <div class="mt-auto space-y-2 text-lg">
+          <p><strong class="text-neon">Email:</strong> tnhi93077@gmail.com</p>
+          <p><strong class="text-neon">Phone:</strong> 0826915138</p>
+          <p><strong class="text-neon">Address:</strong> Ho Chi Minh City</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row flex-wrap gap-6 mt-12">
+      
+      <article class="skill-card transition hover:scale-105 hover:-translate-y-2 hover:shadow-lg animate-slide-up opacity-0 delay-0"
+  data-animate>
+        <div class="flex flex-col items-center justify-center mb-5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] w-[56px] h-[56px]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+          </svg>
+
+        </div>
+        <h3 class="mb-3 text-[20px] font-semibold leading-[1.3]">
+          Business Analysis
+        </h3>
+        <p class="leading-[1.6]">
+          Comprehensive requirement gathering and documentation to ensure project success.
+        </p>
+        <div class="flex flex-row flex-wrap gap-2 mt-4">
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">BRD</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">URD</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">SRS</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Wireframes</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Process Flow</span>
+        </div>
+      </article>
+
+      <article class="group skill-card transition hover:-translate-y-2 hover:shadow-lg animate-slide-up opacity-0 delay-200"
+  data-animate>
+        <div class="flex flex-col items-center justify-center mb-5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] w-[56px] h-[56px]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+        </div>
+        <h3 class="mb-3 text-[20px] font-semibold leading-[1.3]">
+          Testing & Quality Assurance
+        </h3>
+        <p class="leading-[1.6]">
+          Rigorous testing methodologies to deliver flawless user experiences.
+        </p>
+        <div class="flex flex-row flex-wrap gap-2 mt-4">
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">SIT</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">UAT</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Functional Testing</span>
+        </div>
+      </article>
+
+      <article class="skill-card transition hover:-translate-y-2 hover:shadow-lg animate-slide-up opacity-0 delay-400"
+  data-animate>
+        <div class="flex flex-col items-center justify-center mb-5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] w-[56px] h-[56px]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+          </svg>
+        </div>
+        <h3 class="mb-3 text-[20px] font-semibold leading-[1.3]">
+          Product Management
+        </h3>
+        <p class="leading-[1.6]">
+          Strategic product development with user-centric approach and agile methodologies.
+        </p>
+        <div class="flex flex-row flex-wrap gap-2 mt-4">
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Agile/Scrum</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">User Experience</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Documentation</span>
+        </div>
+      </article>
+
+      <article class="skill-card transition hover:-translate-y-2 hover:shadow-lg animate-slide-up opacity-0 delay-600"
+  data-animate>
+        <div class="flex flex-col items-center justify-center mb-5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] w-[56px] h-[56px]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+          </svg>
+
+        </div>
+        <h3 class="mb-3 text-[20px] font-semibold leading-[1.3]">
+          Technical Skills
+        </h3>
+        <p class="leading-[1.6]">
+          Strategic product development with user-centric approach and agile methodologies.
+        </p>
+        <div class="flex flex-row flex-wrap gap-2 mt-4">
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Jira</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Confluence</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Draw.io</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">SQL</span>
+          <span class="px-[6px] py-3 bg-neon/20 font-medium">Figma</span>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+<div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
+
+  <!-- PROJECTS -->
+  <!-- ⭐ Featured Projects Section -->
+<section class="py-12 text-white will-fade" data-animate>
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center">Featured Projects & Impact</h2>
+    <p class="text-center text-lg text-white/70 mt-3 mb-16">
+      Delivering measurable results through strategic fintech solutions
+    </p>
+
+    <!-- Grid Cards -->
+    <div class="grid md:grid-cols-3 gap-6 mt-12">
+
+      <!-- CARD 1 -->
+      <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
+        <h3 class="text-xl font-semibold mb-2">Digistore – Integrated Merchant System</h3>
+        <p class="text-white/60 text-sm mb-4">
+          Led end-to-end analysis & delivery for a full merchant digitalization platform…
+        </p>
+
+        <div class="flex gap-6 my-4 text-lg font-bold">
+          <div>
+            <span class="text-neon">100%</span> <span class="block text-xs text-white/60 font-medium">ONBOARDING DIGITALIZED</span>
+          </div>
+          <div>
+            <span class="text-neon">80%</span> <span class="block text-xs text-white/60 font-medium">OPERATION TIME REDUCED</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Merchant Management</span>
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Routing Engine</span>
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Risk Control</span>
+        </div>
+
+        <button onclick="openModal('modal1')"
+          class="mt-auto bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] text-black px-4 py-2 rounded-md font-semibold w-full hover:text-white">
+          View Case Study
+        </button>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
+        <div class="md:h-[120px]">
+          <h3 class="text-xl font-semibold mb-2">Merchant Platform - Centralized Merchant Platform</h3>
+          <p class="text-white/60 text-sm mb-4">
+            Standardized merchant data flow & delivered a modern Merchant Portal…
+          </p>
+        </div>
+
+        <div class="md:h-[92px]"> 
+          <div class="flex gap-6 my-4 text-lg font-bold">
+            <div>
+              <span class="text-neon">60%</span> <span class="block text-xs text-white/60 font-medium">FASTER REPORTING</span>
+            </div>
+            <div>
+              <span class="text-neon">100%</span> <span class="block text-xs text-white/60 font-medium">DATA FLOW STANDARDIZED</span>
+            </div>
+          </div>
+        </div>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 text-sm border border-white/20 rounded-full">GAP Analysis</span>
+            <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Portal UX/UI</span>
+            <span class="px-3 py-1 text-sm border border-white/20 rounded-full">System Integration</span>
+          </div>
+        
+
+        <button onclick="openModal('modal2')"
+          class="mt-auto bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] text-black px-4 py-2 rounded-md font-semibold w-full hover:text-white">
+          View Case Study
+        </button>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
+        <h3 class="text-xl font-semibold mb-2">Open API – Developer & Integration Platform</h3>
+        <p class="text-white/60 text-sm mb-4">
+          Built end-to-end onboarding, sandbox testing, and automated credentials…
+        </p>
+        <div class="md:h-[92px]">
+          <div class="flex gap-6 my-4 text-lg font-bold">
+            <div>
+              <span class="text-neon">85%</span> <span class="block text-xs text-white/60 font-medium">FASTER ONBOARDING</span>
+            </div>
+            <div>
+              <span class="text-neon">100%</span> <span class="block text-xs text-white/60 font-medium">CREDENTIAL AUTOMATION</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Open API / Open Banking</span>
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Developer Experience</span>
+          <span class="px-3 py-1 text-sm border border-white/20 rounded-full">Sandbox Testing</span>
+        </div>
+
+        <button onclick="openModal('modal3')"
+          class="mt-auto bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] text-black px-4 py-2 rounded-md font-semibold w-full hover:text-white">
+          View Case Study
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
+  <!-- SKILLS -->
+  <style>
+    .category-header {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 32px 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-icon {
+      background: linear-gradient(to right, #3ef08f, #1fe0ff);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--neon);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .skill-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .skill-item {
+      position: relative;
+      padding: 20px;
+      background-color: var(--neon/30);
+      border: 1px solid var(--neon);
+      transition: all 0.3s ease;
+    }
+
+    .skill-item:hover {
+      transform: translateX(8px);
+    }
+
+    .skill-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .skill-name {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .skill-level {
+      font-size: 14px;
+      opacity: 70%;
+      font-weight: 500;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      background: linear-gradient(to right, #3ef08f, #1fe0ff);
+      height: 100%;
+      width: 0;
+      transition: width 1.5s ease;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .skill-item.animated .progress-bar {
+      width: var(--progress-width);
+    }
+
+    .skill-description {
+      background: #1fe0ff;
+      border-radius: 8px;
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      padding: 12px 16px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .skill-description::after {
+      
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: white;
+    }
+
+    .skill-item:hover .skill-description {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .skill-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .skill-badge {
+      background: #3ef08ee2;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 500px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tab-panel {
+      display: none;
+      
+      
+    }
+
+    .tab-panel.active {
+      display: block !important;
+      
+    }
+
+    .tab-btn {
+      background: #3ef08f/30;
+      border: 2px solid #3ef08f;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-8px);
+      background: #1fe0ff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(to right, #3ef08f, #1fe0ff) !important;
+    }
+
+    
+  </style>
+  <section id="skill" class="max-w-6xl mx-auto px-6 md:px-8 py-12 will-fade" data-animate>
+    <div>
+      <h3 class="text-center text-3xl font-bold mb-5">Skills & Professional Tools</h3>
+      <p class="text-center text-white/80">Technical proficiency and methodologies that drive successful project delivery</p>
+    </div>
+
+    <div class="flex flex-row justify-center mt-16 gap-3 mb-12 flex-wrap">
+      <button class="tab-btn active" data-tab="business-analysis"><span class="inline-block text-[18px] mr-2 ">📊</span>Business Analysis</button>
+      <button class="tab-btn" data-tab="testing"><span class="inline-block text-[18px] mr-2 ">🧪</span>Testing</button>
+      <button class="tab-btn" data-tab="software-tools"><span class="inline-block text-[18px] mr-2 ">🔧</span>Software & Tools</button>
+      <button class="tab-btn" data-tab="methodologies"><span class="inline-block text-[18px] mr-2 ">📐</span>Methodologies</button>
+      <button class="tab-btn" data-tab="soft-skill"><span class="inline-block text-[18px] mr-2 ">🤝</span>Soft Skills</button>
+      <button class="tab-btn" data-tab="technical-skill"><span class="inline-block text-[18px] mr-2 ">💻</span>Technical Skills</button>
+      <button class="tab-btn" data-tab="languages"><span class="inline-block text-[18px] mr-2 ">🌐</span>Languages</button>
+    </div>
+    <!--tab-->
+    <div class="relative min-h-[400px]">
+      <!--ba-tab-->
+      <div class="tab-panel active" id="business-analysis">
+        <h3 class="category-header">
+          <span class="category-icon">📊</span>
+          Business Analysis Tools
+        </h3>
+        <div class="skill-grid">
+          <div class="skill-item animated" data-progress="95">
+            <div class="skill-header">
+              <p class="skill-name">BRD (Business Requirements Document)</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 95%;"></div>
+            </div>
+            <div class="skill-description">Comprehensive business requirement documentation and stakeholder alignment</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="90">
+            <div class="skill-header">
+              <p class="skill-name">URD (User Requirements Document)</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 90%;"></div>
+            </div>
+            <div class="skill-description">User-centric requiremnent gathering and documentation</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="92">
+            <div class="skill-header">
+              <p class="skill-name">SRS (Software Requirements Specification)</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 92%;"></div>
+            </div>
+            <div class="skill-description">Detailed technical specifications for development teams</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="88">
+            <div class="skill-header">
+              <p class="skill-name">User Guide</p>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 88%;"></div>
+            </div>
+            <div class="skill-description">Clear and Comprehensive end-user documentation</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="93">
+            <div class="skill-header">
+              <p class="skill-name">Wireframe</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 93%;"></div>
+            </div>
+            <div class="skill-description">Visual representation of user interfaces and user flows</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="90">
+            <div class="skill-header">
+              <p class="skill-name">Process Flow</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 90%;"></div>
+            </div>
+            <div class="skill-description">Business process mapping and optimization diagrams</div>
+          </div>
+        </div>
+      </div>  
+
+      <!--testing-tab-->
+      <div class="tab-panel" id="testing">
+        <h3 class="category-header">
+          <span class="category-icon">🧪</span>
+          Testing Methodologies
+        </h3>
+        <div class="skill-grid">
+          <div class="skill-item animated" data-progress="90">
+            <div class="skill-header">
+              <p class="skill-name">SIT (System Integration Testing)</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 90%;"></div>
+            </div>
+            <div class="skill-description">End-to-end system integration validation and defect identification</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="92">
+            <div class="skill-header">
+              <p class="skill-name">UAT (User Acceptance Testing)</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 92%;"></div>
+            </div>
+            <div class="skill-description">Stakeholder validation ensuring solution meets business needs</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="88">
+            <div class="skill-header">
+              <p class="skill-name">Functional Testing</p>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 88%;"></div>
+            </div>
+            <div class="skill-description">Comprehensive feature validation against requirements</div>
+          </div>
+        </div>
+      </div>
+
+      <!--software-tab-->
+      <div class="tab-panel" id="software-tools">
+        <h3 class="category-header">
+          <span class="category-icon">🔧</span>
+          Software & Platforms
+        </h3>
+        <div class="skill-grid">
+          <div class="skill-item animated" data-progress="95">
+            <div class="skill-header">
+              <p class="skill-name">Jira</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 95%;"></div>
+            </div>
+            <div class="skill-description">Project tracking, sprint planning, and backlog management</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="90">
+            <div class="skill-header">
+              <p class="skill-name">Confluence</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 90%;"></div>
+            </div>
+            <div class="skill-description">Documentation, knowledge base, and team collaboration</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="90">
+            <div class="skill-header">
+              <p class="skill-name">Draw.io</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 90%;"></div>
+            </div>
+            <div class="skill-description">Flowcharts, diagrams, and process visualization</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="88">
+            <div class="skill-header">
+              <p class="skill-name">SQL</p>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 88%;"></div>
+            </div>
+            <div class="skill-description">Database queries, data analysis, and reporting</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="85">
+            <div class="skill-header">
+              <p class="skill-name">Figma</p>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 85%;"></div>
+            </div>
+            <div class="skill-description">UI/UX design, prototyping, and design collaboration</div>
+          </div>
+        </div>
+      </div>
+
+      <!--method-tab-->
+      <div class="tab-panel" id="methodologies">
+        <h3 class="category-header">
+          <span class="category-icon">📐</span>
+          Project Methodologies
+        </h3>
+        <div class="skill-grid">
+          <div class="skill-item animated" data-progress="93">
+            <div class="skill-header">
+              <p class="skill-name">Agile</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 93%;"></div>
+            </div>
+            <div class="skill-description">Iterative development, continuous delivery, and adaptive planning</div>
+          </div>
+
+          <div class="skill-item animated" data-progress="95">
+            <div class="skill-header">
+              <p class="skill-name">Scrum</p>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="--progress-width: 95%;"></div>
+            </div>
+            <div class="skill-description">Sprint planning, daily standups, retrospectives, and incremental delivery</div>
+          </div>
+        </div>
+      </div>
+
+      <!--soft-skill-->
+      <div class="tab-panel" id="soft-skill">
+        <h3 class="category-header">
+          <span class="category-icon">🤝</span>
+          Soft Skills
+        </h3>
+        <div class="skill-list">
+          <div class="skill-badge">Analytical Thinking</div>
+          <div class="skill-badge">Cross-team Communication</div>
+          <div class="skill-badge">Stakeholder collaboration</div>
+          <div class="skill-badge">Problem Solving</div>
+          <div class="skill-badge">Active Listening</div>
+          <div class="skill-badge">Adaptability</div>
+          <div class="skill-badge">Critical Thinking</div>
+          <div class="skill-badge">Team Leadership</div>
+        </div>
+      </div>
+
+      <!--techni-skill-->
+      <div class="tab-panel" id="technical-skill">
+        <h3 class="category-header">
+          <span class="category-icon">💻</span>
+          Technical Skills
+        </h3>
+        <div class="skill-list">
+          <div class="skill-badge">HTML</div>
+          <div class="skill-badge">CSS</div>
+          <div class="skill-badge">Javascript</div>
+          <div class="skill-badge">OOP</div>
+          <div class="skill-badge">C#</div>
+        </div>
+      </div>
+
+      <!--language tab-->
+      <div class="tab-panel" id="languages">
+        <h3 class="category-header">
+          <span class="category-icon">🌐</span>
+          Languages
+        </h3>
+        <div class="bg-neon/80 p-8 border-neon border-[2px] text-center">
+          <p class="text-[24px] mb-3">English</p>
+          <p class="text-[18px] mb-4">Intermediate</p>
+          <p class="text-base text-white/70">Technical documentation and business communication</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
+  <!-- CONTACT -->
+  <section id="contact" class="max-w-6xl mx-auto md:h-[670px] px-6 md:px-8 py-12 will-fade" data-animate>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="flex flex-col">
+        <h3 class="text-4xl font-bold">Ready to Collaborate?</h3>
+        <p class="mt-4 text-white/80">Let's discuss how I can help transform your business requirements into successful products.</p>
+
+        <div class="mt-6 space-y-2">
+          <p><strong class="text-neon">Email:</strong>  tnhi93077@gmail.com</p>
+          <p><strong class="text-neon">Phone:</strong>  0826915138</p>
+          <div class="flex"><strong class="text-neon">LinkedIn:</strong>
+          <a href="www.linkedin.com/in/trần-yến-nhi-yeni" class="ml-2 hover:text-neon"> <span>Connect on Linkedin</span></a>
+          </div>
+        </div>
+        <div class="border-t border-white/50 w-full mt-12 py-3">
+        <div class="flex flex-row items-center gap-2 py-3">
+          <span>📍</span>
+          <span>Based in Ho Chi Minh City, available for remote collaboration.</span>
+        </div>
+        <div class="flex flex-row items-center inline-flex gap-2 rounded-md px-4 py-2 bg-neon/30 font-bold">
+          <span>⚡ I'll respond within 24 hours.</span>
+        </div>
+        </div>
+      </div>
+
+      <form class="contact-form bg-neon/10 glass p-6 rounded-xl">
+        <label class="text-neon font-bold">Name *</label><input class="w-full mt-2 mb-5 bg-transparent border border-white/6 p-3 rounded-md" placeholder="Your full name" required />
+        <label class="text-neon font-bold">Email *</label><input class="w-full mt-2 mb-5 bg-transparent border border-white/6 p-3 rounded-md" placeholder="Your email" required/>
+        <label class="text-neon font-bold">Company</label><input class="w-full mt-2 mb-5 bg-transparent border border-white/6 p-3 rounded-md" placeholder="Your company" />
+        <label class="text-neon font-bold">Message *</label><textarea class="w-full mt-2 mb-5 bg-transparent border border-white/6 p-3 rounded-md" placeholder="Please describe your project or the support you need…" required></textarea>
+        <button class="px-5 py-3 bg-neon text-white font-semibold rounded-md hover:-translate-y-0.5 transition-all">Send message</button>
+      </form>
+
+    </div>
+  </section>
+  
+
+  <!-- FOOTER -->
+  <footer class="bg-gradient-to-b from-[#0a0a0a] to-[#030303] py-8">
+  <div class="max-w-6xl mx-auto"> 
+  <div class="flex flex-row flex-wrap md:flex-nowrap justify-between items-start gap-12 mb-12"> 
+    <!--info-->
+    <div class="flex flex-col flex-1 min-w-[200px] gap-4">
+      <h3 class="text-[24px] w-[700px]">Trần Yến Nhi</h3>
+      <p class="text-white/70 h-[1.6] max-w-[300px]">Business Analyst & Product Owner specializing in Fintech Solutions. Transforming complex requirements into exceptional digital experiences.</p>
+      <div class="flex flex-col gap-3">
+        <!--mail-->
+        <div class="flex flex-row items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-[14px] text-white/70">
+          <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+          <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+          </svg>
+
+          <a href="mailto.tnhi93077@gmail.com" class="text-white/70 hover:text-neon">tnhi93077@gmail.com</a>
+        </div>
+        <!--phone-->
+        <div class="flex flex-row items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-[14px] text-white/70">
+          <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" />
+          </svg>
+          <a href="tel:0826915138" class="text-white/70 hover:text-neon">0826915138</a>
+        </div>
+        <!--located-->
+        <div class="flex flex-row items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-[14px] text-white/70">
+          <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+          </svg>
+          <span>TP. HCM</span>
+        </div>
+      </div>
+    </div>
+
+    <!--navigation-->
+    <div class="flex flex-col flex-1 min-w-[200px] gap-4">
+      <h4 class="text-lg">Quick Links</h4>
+      <div class="flex flex-col gap-2">
+        <a href="#home" class="text-white/70 hover:translate-x-1 hover:text-neon transition">Home</a>
+        <a href="#about" class="text-white/70 hover:translate-x-1 hover:text-neon transition">About & Expertise</a>
+        <a href="#project" class="text-white/70 hover:translate-x-1 hover:text-neon transition">Featured Projects</a>
+        <a href="#skill" class="text-white/70 hover:translate-x-1 hover:text-neon transition">Skill & Tools</a>
+        <a href="#contact" class="text-white/70 hover:translate-x-1 hover:text-neon transition">Let's Connect</a>
+      </div>
+    </div>
+
+    <!--social-->
+    <div class="flex flex-col flex-1 min-w-[200px] gap-4">
+      <h4 class="text-lg">Connect With Me</h4>
+      <div class="flex justify-start gap-4 mt-2 ">
+        <div class="flex justify-center items-center bg-neon w-10 h-10 hover:bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] hover:-translate-y-1 transition">
+          <a href="www.linkedin.com/in/trần-yến-nhi-yeni" target="_blank" rel="noopener noreferref" aria-label="LinkedIn"></a>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+          </svg>
+        </div>
+
+        <div class="flex justify-center items-center bg-neon w-10 h-10 hover:bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] hover:-translate-y-1 transition">
+          <a href="pdf" target="_blank" rel="noopener noreferref" aria-label="Download Resume"></a>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 0 1 3.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 0 1 3.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 0 1-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875Zm5.845 17.03a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V12a.75.75 0 0 0-1.5 0v4.19l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3Z" clip-rule="evenodd" />
+          <path d="M14.25 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 16.5 7.5h-1.875a.375.375 0 0 1-.375-.375V5.25Z" />
+          </svg>
+        </div>
+
+        <div class="flex justify-center items-center bg-neon w-10 h-10 hover:bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] hover:-translate-y-1 transition">
+          <a href="mailto.tnhi93077@gmail.com" target="_blank" rel="noopener noreferref" aria-label="Email"></a>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+          <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+          <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="h-10"></div>
+  <!--copyright-->
+    <div class="flex flex-row flex-wrap max-md:flex-col max-md:justify-center justify-between items-center text-center gap-4">
+      <p class="text-white/50 text-center max-md:order-2">© 2025 Trần Yến Nhi. All rights reserved. Based in Ho Chi Minh City, available for remote collaboration.</p>
+      <button class="bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] flex flex-row items-center text-center rounded-md gap-2 px-5 py-3 hover:-translate-y-0.5 max-md:order-1 transition-all" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to Top">
+        <span>↑</span>
+        <span>Back to Top</span>
+      </button>
+    </div>
+  </div>  
+  </footer>
+
+  <!--popup-->
+  <script>
+  function openModal(id) {
+    document.getElementById(id).classList.remove("hidden");
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.add("hidden");
+  }
+  </script>
+  <!--skill script-->
+  <script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      const id = btn.getAttribute('data-tab');
+      document.getElementById(id).classList.add('active');
+      });
+    });
+  </script>
+
+  <!-- small script: mobile menu toggle + fade-in on scroll -->
+  <script>
+    // mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // simple scroll-trigger to add slide-up animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.remove('will-fade');
+          e.target.classList.add('animate-slide-up');
+          // small delay for children
+          const children = e.target.querySelectorAll('[data-animate]');
+          children.forEach((c, i) => {
+            c.style.animation = 'slideUp 0.6s ease-out forwards';
+            c.style.animationDelay = `${i * 0.08}s`;
+          });
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.will-fade').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- small helper styles for animation (Tailwind's animation utilities are defined in config above) -->
+  <style>
+    .animate-slide-up { animation: slideUp .6s ease-out forwards; }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    /* improve image hover */
+    .transition-img { transition: transform .35s ease, box-shadow .35s ease; }
+  </style>
+  
+  <!-- MODAL 1 -->
+<div id="modal1"
+  class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
+
+  <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-3xl font-bold text-neon">BVBank – Digistore Platform</h2>
+      <button onclick="closeModal('modal1')" class="text-white text-2xl hover:text-neon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-6 py-4">
+      <p class="text-white/60 mb-2">
+        <span class="font-semibold text-white/90">Role:</span> Business Analyst / Product Owner
+      </p>
+      <p class="text-white/60">
+        <span class="font-semibold text-white/90">Duration:</span> Phase 1 & 2 - Completed 100%
+      </p>
+    </div>
+
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-2">1. Project Overview</h3>
+      <p class="text-white/70">
+        BVBank faced fragmented merchant operations, manual onboarding, inconsistent data flows, and limited control over POS transactions and multi-bank routing.<br/>
+        <span class="font-semibold text-white/90">Digistore Platform</span> was built to digitalize all merchant-related processes, centralize data, automate routing, and create a scalable foundation for acquiring, POS, and merchant services.
+      </p>
+    </div>
+
+    <!-- System Sections -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3">2. System Components I Analyzed & Delivered</h3>
+
+      <div class="space-y-4">
+
+        <div>
+          <h4 class="font-semibold">MMS – Merchant Management System</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>Manage multiple merchant types: individuals, SMEs, enterprises, master merchants</li>
+            <li>Dynamic pricing engine by product, card type, brand, domestic/international</li>
+            <li>Multi-level KYC workflow: submission → validation → approval</li>
+            <li>EDC device management: TID/MID, assignment, lifecycle tracking</li>
+            <li>Multi-bank routing rules based on card type, brand (Visa/Master/Amex/UCP), MCC, priority & fallback</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">MDP – Merchant Data Platform</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>Two-way synchronization with MMS</li>
+            <li>Additional data fields for pricing, cost structure, routing bank</li>
+            <li>Master Merchant product & pricelist management</li>
+            <li>Promotion module</li>
+            <li>Risk & fraud control configuration: daily, per-device, per-transaction limits</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">MDM – Mobile Device Management</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>POS connectivity configuration</li>
+            <li>Version control & OTA app updates</li>
+            <li>Device status & configuration monitoring</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">Merchant Portal</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>Real-time revenue dashboard/li>
+            <li>Real-time transaction viewer</li>
+            <li>ShopQR</li>
+            <li>Active POS device tracking</li>
+            <li>Sales management (product, table, order, customers, e-menu)</li>
+            <li>Business profile & staff management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li>Gathered and analyzed requirements with BVBank & ATOM</li>
+        <li>Developed <span class="font-semibold">BRD, SRS, user flows, process flows</span> for the entire platform</li>
+        <li>Defined complex business logic: Pricing engine, Multi-bank routing rules</li>
+        <li>Designed UX/UI: wireframes, screen structure, user experience</li>
+        <li>Collaborated directly with developers to clarify requirements and resolve technical constraints</li>
+        <li>Built detailed data mapping MMS - MDP - POS - Portal</li>
+        <li>Created test cases and led UAT, validating routing and risk logic</li>
+        <li>Trained users and supported go-live & post-launch operations</li>
+        <li>Proposed process improvements reducing merchant approval time significantly</li>
+      </ul>
+    </div>
+
+     <!-- Impact -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li><span class="font-semibold text-neon">100% digitalization</span> of merchant onboarding & approval workflow</li>
+        <li><span class="font-semibold text-neon">80% reduction in POS transaction management time</span> via automation</li>
+        <li>Significant reduction in operational errors due to standardized workflows</li>
+        <li>Scalable foundation for multibank acquiring & high-volume merchant onboarding</li>
+        <li>Merchant Portal greatly improved usability with clean UX and real-time data</li>
+      </ul>
+    </div> 
+
+    <button onclick="closeModal('modal1')" class="px-5 py-3 text-black font-semibold rounded-md hover:-translate-y-0.5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] transition-all">Close</button>
+
+  </div>
+</div>
+
+<!-- MODAL 2 -->
+<div id="modal2"
+  class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
+
+  <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-3xl font-bold text-neon">OCB – Merchant Platform</h2>
+      <button onclick="closeModal('modal2')" class="text-white text-2xl hover:text-neon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-6 py-4">
+      <p class="text-white/60 mb-2">
+        <span class="font-semibold text-white/90">Role:</span> Business Analyst
+      </p>
+      <p class="text-white/60">
+        <span class="font-semibold text-white/90">Duration:</span> Phase 1 - Completed 100%
+      </p>
+    </div>
+
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-2">1. Project Overview</h3>
+      <p class="text-white/70">
+        OCB aimed to rebuild its merchant platform, unify scattered data, and introduce a modern Merchant Portal to enhance merchant experience and prepare for a full-scale transformation in later phases.
+      </p>
+    </div>
+
+    <!-- System Sections -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3">2. Scope Delivered</h3>
+
+      <div class="space-y-4">
+
+        <div>
+          <h4 class="font-semibold">MMS – Merchant Management System</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>One-way integration OCB → MMS</li>
+            <li>Standardized merchant & device data model</li>
+            <li>Built a stable foundation for phase 2–3 full MMS adoption</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold">Merchant Portal</h4>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>Designed modern UX/UI optimized for merchant operations</li>
+            <li>Revenue dashboard & real-time transaction viewer</li>
+            <li>POS device management</li>
+            <li>ShopQR</li>
+            <li>Business profile section</li>
+            <li>Integrated APIs from OCB backend systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li>Performed GAP analysis between OCB’s system and Merchant Platform</li>
+        <li>Created full BRD & SRS for the project’s first phase</li>
+        <li>Validated data synchronization & system flows</li>
+        <li>Designed the new Merchant Portal aligned with merchant use cases</li>
+        <li>Coordinated with developers to ensure successful implementation</li>
+      </ul>
+    </div>
+
+     <!-- Impact -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li>Fully standardized merchant data flow</li>
+        <li>Merchant Portal improved reporting speed by <span class="font-semibold text-neon"> ~60%</span></li>
+        <li>Established groundwork for digital transformation in future phases</li>
+        <li>Ensured stable operations prior to full MMS migration</li>
+      </ul>
+    </div> 
+
+    <button onclick="closeModal('modal2')" class="px-5 py-3 text-black font-semibold rounded-md hover:-translate-y-0.5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] transition-all">Close</button>
+
+  </div>
+</div>
+
+<!-- MODAL 3 -->
+<div id="modal3"
+  class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
+
+  <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-3xl font-bold text-neon">OCB – Merchant Platform</h2>
+      <button onclick="closeModal('modal3')" class="text-white text-2xl hover:text-neon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-6 py-4">
+      <p class="text-white/60 mb-2">
+        <span class="font-semibold text-white/90">Role:</span> Business Analyst / UX Writer
+      </p>
+      <p class="text-white/60">
+        <span class="font-semibold text-white/90">Duration:</span> Phase 1 - Completed 100%
+      </p>
+    </div>
+
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-2">1. Project Overview</h3>
+      <p class="text-white/70">
+        Developed an Open API platform for enterprises & merchants, enabling self-service onboarding, sandbox testing, credential automation, and production deployment.
+      </p>
+    </div>
+
+    <!-- System Sections -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3">2. Scope Delivered</h3>
+
+      <div class="space-y-4">
+        <div>
+          <ul class="text-white/70 list-disc ml-5 px-2">
+            <li>End-to-end onboarding journey: registration → sandbox testing → contract → production</li>
+            <li>Full UI/UX for developer-friendly experience</li>
+            <li> Sandboxs APIs: Balance notification, Virtual accounts, Transaction IPN</li>
+            <li>API-level sandbox tiering</li>
+            <li>Automated client credential issuance</li>
+            <li>Worked with security & backend teams on auth, IP whitelist, and routing</li>
+          </ul>
+        </div>
+      </div>  
+    </div>
+    <!-- Role -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li>Designed user journey & API onboarding flows</li>
+        <li>Created UI content & interaction flow</li>
+        <li>Wrote integration documentation</li>
+        <li>Created test cases & validated API responses</li>
+        <li>Supported partners during technical integration</li>
+      </ul>
+    </div>
+
+     <!-- Impact -->
+    <div class="border-t border-white/50 w-full py-4 mb-8">
+      <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
+      <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
+        <li>Onboarding time reduced by<span class="font-semibold text-neon"> 85%</span> through workflow redesign and automation.</li>
+        <li>Fully automated credential issuance</li>
+        <li>Increased integration capability with enterprise partners</li>
+        <li>Created a frictionless, developer-friendly API experience</li>
+      </ul>
+    </div> 
+
+    <button onclick="closeModal('modal3')" class="px-5 py-3 text-black font-semibold rounded-md hover:-translate-y-0.5 bg-gradient-to-r from-[#3ef08f] to-[#1fe0ff] transition-all">Close</button>
+
+  </div>
+</div>
+
+</body>
+</html>
+ 
