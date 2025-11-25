@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Portfolio — Elegant Neon</title>
 
-  <!-- Tailwind CDN -->
+  <!--tailwind cdn-->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom Tailwind config (colors) -->
+  <!--config color-->
   <script>
     tailwind.config = {
       theme: {
@@ -41,7 +41,7 @@
     }
   </script>
 
-  <!-- Custom styles for blobs & shapes  -->
+  <!--bghome css-->
   <style>
     :root { --neon: #3ef08f; --bg: #0f1216; }
 
@@ -84,7 +84,7 @@
 </head>
 <body class="bg-[color:var(--bg)] text-white antialiased">
 
-  <!-- BLOBS & FLOATING SHAPES -->
+  <!--bghome-->
   <div aria-hidden="true">
     <div class="blob" style="width:520px;height:520px;left:-120px;top:40px;background:radial-gradient(circle at 30% 30%, rgba(62,240,143,0.9), rgba(62,240,143,0.5) 25%, rgba(0,0,0,0) 60%);"></div>
     <div class="blob" style="width:420px;height:420px;right:-80px;top:120px;background:radial-gradient(circle at 70% 30%, rgba(44,216,118,0.9), rgba(44,216,118,0.35) 25%, rgba(0,0,0,0) 55%);"></div>
@@ -94,7 +94,7 @@
     <div class="float-shape hidden md:block" style="right:20%;bottom:14%; width:70px;height:70px;border-radius:12px; animation-duration:8s; animation-delay:2s;"></div>
   </div>
 
-  <!-- NAVBAR -->
+  <!--NAV-->
   <header class="relative z-20">
     <nav class="max-w-6xl mx-auto px-6 md:px-8 py-6 flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -113,7 +113,7 @@
       <div class="flex items-center gap-3">
         <a href="#contact" class="hidden md:inline-block px-4 py-2 rounded-md bg-neon text-lg text-black font-medium hover:bg-neon-2 transition">Let's connect</a>
 
-        <!-- mobile menu button -->
+        <!--mobile menu button-->
         <button id="menuBtn" class="md:hidden px-3 py-2 inline-flex items-center justify-center rounded-md border border-white/6">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
@@ -122,7 +122,7 @@
       </div>
     </nav>
 
-    <!-- mobile menu id để java nhận biết click vao-->
+    <!--mobile menu-->
     <div id="mobileMenu" class="md:hidden bg-[color:var(--bg)] border-t border-white/6 hidden">
       <div class="px-6 py-4 flex flex-col gap-3">
         <a href="#home" class="text-white/80 text-lg">Home</a>
@@ -135,10 +135,10 @@
     </div>
   </header>
 
-  <!-- HERO -->
+  <!--HOME-->
   <main id="home" class="relative z-10">
     <section class="max-w-6xl mx-auto px-6 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-20 flex flex-col-reverse md:flex-row items-center gap-10">
-      <!-- text -->
+      <!--text-->
       <div class="w-full md:w-2/3 will-fade" data-animate>
         <p class="text-base text-white/70 mb-3">Hello, I'm a</p>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
@@ -149,12 +149,12 @@
         </p>
 
         <div class="mt-8 flex gap-4 items-center">
-          <a href="#portfolio" class="px-5 py-3 bg-neon rounded-md text-lg text-black font-semibold shadow">View Portfolio</a>
-          <a href="#contact" class="px-4 py-2 border border-white/6 rounded-md text-lg text-white/90">Let's work together</a>
+          <a href="pdf" target="_blank" rel="noopener noreferref" aria-label="Download Resume" class="px-5 py-3 bg-neon rounded-md text-lg text-black font-semibold shadow hover:text-white">Download Resume</a>
+          <a href="#contact" class="px-4 py-2 border border-white/6 rounded-md text-lg text-white/90 hover:scale-110 transition">Let's work together</a>
         </div>
       </div>
 
-      <!-- image card -->
+      <!--image card-->
       
       <div class="w-full md:w-1/2 flex justify-center md:justify-end">
         <div class="flex justify-center relative">
@@ -173,11 +173,12 @@
         </div>
       </div>
       
-      
+
     </section>
   </main>
+
 <div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
-  <!-- ABOUT -->
+  <!--ABOUT-->
   <style>
     .career-goal {
       background-color: #3ef08e36;
@@ -328,8 +329,7 @@
   </section>
 <div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
 
-  <!-- PROJECTS -->
-  <!-- ⭐ Featured Projects Section -->
+  <!--PROJECT-->
 <section class="py-12 text-white will-fade" data-animate>
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center">Featured Projects & Impact</h2>
@@ -337,10 +337,10 @@
       Delivering measurable results through strategic fintech solutions
     </p>
 
-    <!-- Grid Cards -->
+    <!--summary card-->
     <div class="grid md:grid-cols-3 gap-6 mt-12">
 
-      <!-- CARD 1 -->
+      <!--card1-->
       <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
         <h3 class="text-xl font-semibold mb-2">Digistore – Integrated Merchant System</h3>
         <p class="text-white/60 text-sm mb-4">
@@ -368,7 +368,7 @@
         </button>
       </div>
 
-      <!-- CARD 2 -->
+      <!--card2-->
       <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
         <div class="md:h-[120px]">
           <h3 class="text-xl font-semibold mb-2">Merchant Platform - Centralized Merchant Platform</h3>
@@ -401,7 +401,7 @@
         </button>
       </div>
 
-      <!-- CARD 3 -->
+      <!--card3-->
       <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-6 shadow-lg">
         <h3 class="text-xl font-semibold mb-2">Open API – Developer & Integration Platform</h3>
         <p class="text-white/60 text-sm mb-4">
@@ -436,7 +436,8 @@
 
 
 <div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
-  <!-- SKILLS -->
+
+  <!--SKILL-->
   <style>
     .category-header {
       font-size: 24px;
@@ -898,7 +899,9 @@
   </section>
 
 <div class="h-[2px] w-full bg-white/10 backdrop-blur-sm my-12"></div>
-  <!-- CONTACT -->
+
+
+  <!--CONTACT-->
   <section id="contact" class="max-w-6xl mx-auto md:h-[670px] px-6 md:px-8 py-12 will-fade" data-animate>
     <div class="grid md:grid-cols-2 gap-8">
       <div class="flex flex-col">
@@ -935,7 +938,7 @@
   </section>
   
 
-  <!-- FOOTER -->
+  <!--FOOTER-->
   <footer class="bg-gradient-to-b from-[#0a0a0a] to-[#030303] py-8">
   <div class="max-w-6xl mx-auto"> 
   <div class="flex flex-row flex-wrap md:flex-nowrap justify-between items-start gap-12 mb-12"> 
@@ -1034,6 +1037,7 @@
     document.getElementById(id).classList.add("hidden");
   }
   </script>
+
   <!--skill script-->
   <script>
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1048,22 +1052,22 @@
     });
   </script>
 
-  <!-- small script: mobile menu toggle + fade-in on scroll -->
+  <!-- mobile menu and fade in -->
   <script>
-    // mobile menu toggle
+    // mobile menu
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     menuBtn?.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
 
-    // simple scroll-trigger to add slide-up animation
+    // slide up entry
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.remove('will-fade');
           e.target.classList.add('animate-slide-up');
-          // small delay for children
+          // delay
           const children = e.target.querySelectorAll('[data-animate]');
           children.forEach((c, i) => {
             c.style.animation = 'slideUp 0.6s ease-out forwards';
@@ -1076,24 +1080,24 @@
     document.querySelectorAll('.will-fade').forEach(el => observer.observe(el));
   </script>
 
-  <!-- small helper styles for animation (Tailwind's animation utilities are defined in config above) -->
+  <!--config animation-->
   <style>
     .animate-slide-up { animation: slideUp .6s ease-out forwards; }
     @keyframes slideUp {
       0% { opacity: 0; transform: translateY(18px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    /* improve image hover */
+    /* img hover */
     .transition-img { transition: transform .35s ease, box-shadow .35s ease; }
   </style>
   
-  <!-- MODAL 1 -->
+  <!--modal 1-->
 <div id="modal1"
   class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
 
   <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
 
-    <!-- Header -->
+    <!--header-->
     <div class="flex justify-between items-center">
       <h2 class="text-3xl font-bold text-neon">BVBank – Digistore Platform</h2>
       <button onclick="closeModal('modal1')" class="text-white text-2xl hover:text-neon">
@@ -1120,7 +1124,7 @@
       </p>
     </div>
 
-    <!-- System Sections -->
+    <!--case study-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3">2. System Components I Analyzed & Delivered</h3>
 
@@ -1171,7 +1175,7 @@
       </div>
     </div>
 
-    <!-- Role -->
+    <!--role-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
@@ -1187,7 +1191,7 @@
       </ul>
     </div>
 
-     <!-- Impact -->
+     <!--impact-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
@@ -1204,13 +1208,13 @@
   </div>
 </div>
 
-<!-- MODAL 2 -->
+<!--modal 2-->
 <div id="modal2"
   class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
 
   <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
 
-    <!-- Header -->
+    <!--header-->
     <div class="flex justify-between items-center">
       <h2 class="text-3xl font-bold text-neon">OCB – Merchant Platform</h2>
       <button onclick="closeModal('modal2')" class="text-white text-2xl hover:text-neon">
@@ -1236,7 +1240,7 @@
       </p>
     </div>
 
-    <!-- System Sections -->
+    <!--case study-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3">2. Scope Delivered</h3>
 
@@ -1265,7 +1269,7 @@
       </div>
     </div>
 
-    <!-- Role -->
+    <!--role-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
@@ -1277,7 +1281,7 @@
       </ul>
     </div>
 
-     <!-- Impact -->
+     <!--impact-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
@@ -1293,13 +1297,13 @@
   </div>
 </div>
 
-<!-- MODAL 3 -->
+<!--modal 3-->
 <div id="modal3"
   class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-[9999]">
 
   <div class="bg-[#0f1b1b] max-w-3xl w-full rounded-xl p-6 overflow-y-auto max-h-[90vh] border border-white/10">
 
-    <!-- Header -->
+    <!--header-->
     <div class="flex justify-between items-center">
       <h2 class="text-3xl font-bold text-neon">OCB – Merchant Platform</h2>
       <button onclick="closeModal('modal3')" class="text-white text-2xl hover:text-neon">
@@ -1325,7 +1329,7 @@
       </p>
     </div>
 
-    <!-- System Sections -->
+    <!--case study-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3">2. Scope Delivered</h3>
 
@@ -1342,7 +1346,7 @@
         </div>
       </div>  
     </div>
-    <!-- Role -->
+    <!--role-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">3. My Responsibilities</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
@@ -1354,7 +1358,7 @@
       </ul>
     </div>
 
-     <!-- Impact -->
+     <!--impact-->
     <div class="border-t border-white/50 w-full py-4 mb-8">
       <h3 class="text-xl font-semibold mt-4 mb-3 pt-4">4. Impact / Results</h3>
       <ul class="text-white/70 list-disc ml-5 px-2 space-y-1">
