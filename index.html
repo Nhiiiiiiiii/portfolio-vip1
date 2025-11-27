@@ -91,7 +91,7 @@
   </style>
 </head>
 
-<body class="bg-[color:var(--bg)] text-white antialiased">
+<body class="bg-[color:var(--bg)] overflow-x-hidden text-white antialiased">
 
   <!--bghome-->
   <div aria-hidden="true">
@@ -641,7 +641,7 @@
     .skill-badge {
       background: #3ef08ee2;
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 6px 12px;
       border-radius: 8px;
       font-weight: 500px;
       transition: all 0.3s ease;
@@ -943,11 +943,46 @@
           Technical Skills
         </h3>
         <div class="skill-list">
-          <div class="skill-badge">HTML</div>
-          <div class="skill-badge">CSS</div>
-          <div class="skill-badge">Javascript</div>
-          <div class="skill-badge">OOP</div>
-          <div class="skill-badge">C#</div>
+          <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-4 shadow-lg">
+            <h3 class="text-center font-semibold">Web Development</h3>
+            <div class="flex flex-row flex-wrap justify-center gap-2 mt-3">
+              <div class="skill-badge">HTML</div>
+              <div class="skill-badge">CSS</div>
+            </div>
+          </div>
+          <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-4 shadow-lg">
+            <h3 class="text-center font-semibold">Programming Languages</h3>
+            <div class="flex flex-row flex-wrap justify-center gap-2 mt-3">
+              <div class="skill-badge">Javascript</div>
+              <div class="skill-badge">C#</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-4 shadow-lg">
+            <h3 class="text-center font-semibold">Software Development Concepts</h3>
+            <div class="flex flex-row flex-wrap justify-center gap-2 mt-3">
+              <div class="skill-badge">OOP</div>
+              <div class="skill-badge">RESTful API</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-4 shadow-lg">
+            <h3 class="text-center font-semibold">Database</h3>
+            <div class="flex flex-row flex-wrap justify-center gap-2 mt-3">
+              <div class="skill-badge">SQL</div>
+              <div class="skill-badge">PostgreSQL</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col h-full bg-[#0f1b1b] border border-white/10 rounded-xl p-4 shadow-lg">
+            <h3 class="text-center font-semibold">Tools</h3>
+            <div class="flex flex-row flex-wrap justify-center gap-2 mt-3">
+              <div class="skill-badge">VS Code</div>
+              <div class="skill-badge">GitHub</div>
+              <div class="skill-badge">Postman</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
